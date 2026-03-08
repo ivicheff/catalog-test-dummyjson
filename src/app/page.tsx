@@ -1,36 +1,102 @@
-import Link from "next/link";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
+import { Spinner } from "~/components/ui/spinner";
+
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  age: number;
+  phone: string;
+  address: {
+    city: string;
+  };
+  image: string;
+}
 
 export default function HomePage() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("https://dummyjson.com/users");
+        const data = await response.json();
+        setUsers(data.users);
+        setFilteredUsers(data.users);
+      } catch (error) {
+        console.error("Failed to fetch users:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const handleSearch = (value: string) => {
+    setSearchQuery(value);
+    const filtered = users.filter((user) =>
+      `${user.firstName} ${user.lastName}`
+        .toLowerCase()
+        .includes(value.toLowerCase()),
+    );
+    setFilteredUsers(filtered);
+  };
+
+  if (loading) {
+    return (
+      <main className="flex h-screen items-center justify-center">
+        <Spinner />
+      </main>
+    );
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+    <main className="">
+      <div className="bg-secondary py-8">
+        <div className="mx-auto max-w-[18.75rem]">
+          <Input
+            className="bg-white"
+            placeholder="Search by name"
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)}
+          />
         </div>
+      </div>
+      <div className="grid gap-4 p-8 md:grid-cols-2 lg:grid-cols-3">
+        {filteredUsers.map((user) => (
+          <Card key={user.id}>
+            <CardHeader className="flex gap-2">
+              <Avatar>
+                <AvatarImage src={`${user.image}`} />
+                <AvatarFallback>
+                  {`${user.firstName?.[0]?.toUpperCase() ?? ""}${user.lastName?.[0]?.toUpperCase() ?? ""}`}
+                </AvatarFallback>
+              </Avatar>
+              <CardTitle>{`${user.firstName} ${user.lastName}`}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>{user.email}</p>
+              <p>{user.age}</p>
+              <p>{user.phone}</p>
+              <p>{user.address.city}</p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </main>
   );
