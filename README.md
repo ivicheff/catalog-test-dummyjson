@@ -1,31 +1,29 @@
-# Create T3 App
+Тестовое задание
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Реализовать страницу-каталог пользователей с использованием публичного API.
 
-## What's next? How do I make an app with this?
+API: https://dummyjson.com/docs/users
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Требования:
+• Отображение списка пользователей с основной информацией (имя, email, аватар и т.д.)
+• Поиск по имени
+• Пагинация
+• Стек: React, TypeScript
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Не требуется:
+• Авторизация
+• Backend
+• Pixel-perfect дизайн
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Дизайн свободный. Должно выглядеть аккуратно и удобно.
 
-## Learn More
+Справка по API:
+GET /users?limit=10&skip=0 — список с пагинацией
+GET /users/search?q=Emily — поиск
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+В ответе приходят total, skip, limit для пагинации.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
-# catalog-test-dummyjson
-# catalog-test-dummyjson
+Сдача:
+• Ссылка на GitHub-репозиторий
+• README с инструкцией по запуску
+• Срок: 3 дня с момента получения задания
