@@ -1,29 +1,8 @@
-Тестовое задание
+# Как запустить
 
-Реализовать страницу-каталог пользователей с использованием публичного API.
+```bash
+git clone https://github.com/ivicheff/catalog-test-dummyjson.git
+cd catalog-test-dummyjson
 
-API: https://dummyjson.com/docs/users
-
-Требования:
-• Отображение списка пользователей с основной информацией (имя, email, аватар и т.д.)
-• Поиск по имени
-• Пагинация
-• Стек: React, TypeScript
-
-Не требуется:
-• Авторизация
-• Backend
-• Pixel-perfect дизайн
-
-Дизайн свободный. Должно выглядеть аккуратно и удобно.
-
-Справка по API:
-GET /users?limit=10&skip=0 — список с пагинацией
-GET /users/search?q=Emily — поиск
-
-В ответе приходят total, skip, limit для пагинации.
-
-Сдача:
-• Ссылка на GitHub-репозиторий
-• README с инструкцией по запуску
-• Срок: 3 дня с момента получения задания
+pnpm i
+pnpm dev
